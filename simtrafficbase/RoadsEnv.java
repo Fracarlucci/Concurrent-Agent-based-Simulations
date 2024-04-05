@@ -33,7 +33,7 @@ public class RoadsEnv extends AbstractEnvironment {
 	}
 	
 	@Override
-	public void init() {
+	public synchronized void init() {
 		for (var tl: trafficLights) {
 			tl.init();
 		}

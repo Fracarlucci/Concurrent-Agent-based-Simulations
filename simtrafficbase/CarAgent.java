@@ -12,6 +12,7 @@ public abstract class CarAgent extends AbstractAgent {
 
   /* car model */
   protected double maxSpeed;
+  private final Lock envLock;
   protected double currentSpeed;
   protected double acceleration;
   protected double deceleration;
@@ -21,12 +22,13 @@ public abstract class CarAgent extends AbstractAgent {
   protected Optional<Action> selectedAction;
 
 
-  public CarAgent(String id, RoadsEnv env, Road road,
+  public CarAgent(String id, RoadsEnv env, Road road, Lock envLock,
                   double initialPos,
                   double acc,
                   double dec,
                   double vmax) {
     super(id);
+    this.envLock = envLock;
     this.acceleration = acc;
     this.deceleration = dec;
     this.maxSpeed = vmax;
@@ -34,23 +36,23 @@ public abstract class CarAgent extends AbstractAgent {
   }
 
   @Override
-  public void run() {
-    synchronized(this) {
-      while (true) {
-        try {
-          // TODO aggiungere il while
-          System.out.println("I'm waiting.. ID: " + super.getAgentId());
-          wait();
+  public synchronized void run() {
+    synchronized (envLock) {
+    while (true) {
+      try {
+        // TODO aggiungere il while
+        System.out.println("I'm waiting.. ID: " + envLock.toString());
+        envLock.wait();
 
-          System.out.println("I'm running.. ID: " + super.getAgentId());
+        System.out.println("I'm running.. ID: " + super.getAgentId());
 
-          step(super.getDt());
+//        step(super.getDt());
 
 
-        } catch (InterruptedException e) {
-          System.out.println("Tirata eccezione");
-        }
+      } catch (InterruptedException e) {
+        System.out.println("Tirata eccezione");
       }
+    }
     }
   }
 
