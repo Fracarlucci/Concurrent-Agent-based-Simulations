@@ -5,15 +5,16 @@ package pcd.ass01.simengineseq;
  * Base class to define the environment of the simulation
  *   
  */
-public abstract class AbstractEnvironment {
+public abstract class AbstractEnvironment extends Thread {
 
 	private String id;
 	
 	protected AbstractEnvironment(String id) {
 		this.id = id;		
 	}
-	
-	public String getId() {
+
+
+	public synchronized String getEnvId() {
 		return id;
 	}
 	

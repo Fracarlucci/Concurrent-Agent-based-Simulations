@@ -47,7 +47,7 @@ public class RoadsEnv extends AbstractEnvironment {
 	}
 	
 	public void registerNewCar(CarAgent car, Road road, double pos) {
-		registeredCars.put(car.getId(), new CarAgentInfo(car, road, pos));
+		registeredCars.put(car.getAgentId(), new CarAgentInfo(car, road, pos));
 	}
 
 	public Road createRoad(P2d p0, P2d p1) {
@@ -63,7 +63,7 @@ public class RoadsEnv extends AbstractEnvironment {
 	}
 
 	@Override
-	public Percept getCurrentPercepts(String agentId) {
+	public synchronized Percept getCurrentPercepts(String agentId) {
 		
 		CarAgentInfo carInfo = registeredCars.get(agentId);
 		double pos = carInfo.getPos();
@@ -98,7 +98,7 @@ public class RoadsEnv extends AbstractEnvironment {
 	
 	
 	@Override
-	public void doAction(String agentId, Action act) {
+	public synchronized void doAction(String agentId, Action act) {
 		switch (act) {
 		case MoveForward mv: {
 			CarAgentInfo info = registeredCars.get(agentId);
@@ -124,15 +124,15 @@ public class RoadsEnv extends AbstractEnvironment {
 	}
 	
 	
-	public List<CarAgentInfo> getAgentInfo(){
+	public synchronized List<CarAgentInfo> getAgentInfo(){
 		return this.registeredCars.entrySet().stream().map(el -> el.getValue()).toList();
 	}
 
-	public List<Road> getRoads(){
+	public synchronized List<Road> getRoads(){
 		return roads;
 	}
 	
-	public List<TrafficLight> getTrafficLights(){
+	public synchronized List<TrafficLight> getTrafficLights(){
 		return trafficLights;
 	}
 }
