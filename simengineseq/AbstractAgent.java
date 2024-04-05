@@ -28,7 +28,7 @@ public abstract class AbstractAgent extends Thread {
 	 * 
 	 * @param env
 	 */
-	public synchronized void init(AbstractEnvironment env) {
+	 void init(AbstractEnvironment env) {
 		this.env = env;
 	}
 	
@@ -44,7 +44,7 @@ public abstract class AbstractAgent extends Thread {
 		return myId;
 	}
 	
-	protected synchronized AbstractEnvironment getEnv() {
+	protected AbstractEnvironment getEnv() {
 		return this.env;
 	}
 

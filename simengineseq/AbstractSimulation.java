@@ -67,6 +67,7 @@ public abstract class AbstractSimulation extends Thread {
     env.init();
     for (var a : agents) {
       a.init(env);
+      a.start();
     }
 
     this.notifyReset(t, agents, env);
