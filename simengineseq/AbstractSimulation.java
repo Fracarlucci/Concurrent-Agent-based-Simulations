@@ -2,12 +2,14 @@ package pcd.ass01.simengineseq;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Base class for defining concrete simulations
  *  
  */
-public abstract class AbstractSimulation {
+public abstract class AbstractSimulation extends Thread {
 
 	/* environment of the simulation */
 	private AbstractEnvironment env;
@@ -33,11 +35,12 @@ public abstract class AbstractSimulation {
 	private long startWallTime;
 	private long endWallTime;
 	private long averageTimePerStep;
-
+	private final Lock lock;
 
 	protected AbstractSimulation() {
 		agents = new ArrayList<AbstractAgent>();
 		listeners = new ArrayList<SimulationListener>();
+		lock = new ReentrantLock();
 		toBeInSyncWithWallTime = false;
 	}
 	
@@ -54,7 +57,8 @@ public abstract class AbstractSimulation {
 	 * 
 	 * @param numSteps
 	 */
-	public void run(int numSteps) {		
+	public synchronized void run(int numSteps) {
+		notifyAll();
 
 		startWallTime = System.currentTimeMillis();
 
@@ -78,6 +82,7 @@ public abstract class AbstractSimulation {
 			/* make a step */
 			
 			env.step(dt);
+			// TODO make atomic
 			for (var agent: agents) {
 				agent.step(dt);
 			}
@@ -105,6 +110,7 @@ public abstract class AbstractSimulation {
 	public long getAverageTimePerCycle() {
 		return averageTimePerStep;
 	}
+	public Lock getLock() { return lock; }
 	
 	/* methods for configuring the simulation */
 	

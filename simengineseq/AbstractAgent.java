@@ -1,5 +1,7 @@
 package pcd.ass01.simengineseq;
 
+import java.util.concurrent.locks.Lock;
+
 /**
  * 
  * Base  class for defining types of agents taking part to the simulation
@@ -9,6 +11,7 @@ public abstract class AbstractAgent extends Thread {
 	
 	private String myId;
 	private AbstractEnvironment env;
+	private int dt;
 	
 	/**
 	 * Each agent has an identifier
@@ -17,6 +20,7 @@ public abstract class AbstractAgent extends Thread {
 	 */
 	protected AbstractAgent(String id) {
 		this.myId = id;
+		this.dt = 0;
 	}
 	
 	/**
@@ -26,6 +30,7 @@ public abstract class AbstractAgent extends Thread {
 	 */
 	public synchronized void init(AbstractEnvironment env) {
 		this.env = env;
+		this.run();
 	}
 	
 	/**
@@ -43,4 +48,7 @@ public abstract class AbstractAgent extends Thread {
 	protected synchronized AbstractEnvironment getEnv() {
 		return this.env;
 	}
+
+	protected synchronized void setDt(int dt) { this.dt = dt; }
+	protected synchronized int getDt() { return this.dt; }
 }

@@ -3,12 +3,12 @@ package pcd.ass01.simtrafficbase;
 import java.util.Optional;
 
 /**
- * 
+ *
  * Extended Car behaviour, considering near cars and semaphores
- * 
+ *
  * If there is a car and it is near, slow down.
  * If there are no cars or the car is far, accelerate up to a constant speed
- * 
+ *
  */
 public class CarAgentExtended extends CarAgent {
 
@@ -17,26 +17,26 @@ public class CarAgentExtended extends CarAgent {
 	private static final int MAX_WAITING_TIME = 2;
 	private static final int SEM_NEAR_DIST = 100;
 
-	private enum CarAgentState { STOPPED, ACCELERATING, 
-				DECELERATING_BECAUSE_OF_A_CAR, 
-				DECELERATING_BECAUSE_OF_A_NOT_GREEN_SEM, 
+	private enum CarAgentState { STOPPED, ACCELERATING,
+				DECELERATING_BECAUSE_OF_A_CAR,
+				DECELERATING_BECAUSE_OF_A_NOT_GREEN_SEM,
 				WAITING_FOR_GREEN_SEM,
-				WAIT_A_BIT, MOVING_CONSTANT_SPEED}	
-	
+				WAIT_A_BIT, MOVING_CONSTANT_SPEED}
+
 	private CarAgentState state;
-	
+
 	private int waitingTime;
-	
-	public CarAgentExtended(String id, RoadsEnv env, Road road, 
-					double initialPos, 
-					double acc, 
+
+	public CarAgentExtended(String id, RoadsEnv env, Road road,
+					double initialPos,
+					double acc,
 					double dec,
 					double vmax) {
 		super(id, env, road, initialPos, acc, dec, vmax);
 		state = CarAgentState.STOPPED;
 	}
-	
-	
+
+
 	@Override
 	public void decide(int dt) {
 		switch (state) {
@@ -54,7 +54,7 @@ public class CarAgentExtended extends CarAgent {
 				this.currentSpeed += acceleration * dt;
 				if (currentSpeed >= maxSpeed) {
 					state = CarAgentState.MOVING_CONSTANT_SPEED;
-				}			
+				}
 			}
 			break;
 		case CarAgentState.MOVING_CONSTANT_SPEED:
@@ -91,15 +91,15 @@ public class CarAgentExtended extends CarAgent {
 			if (detectedGreenSem()) {
 				state = CarAgentState.ACCELERATING;
 			}
-			break;		
+			break;
 		}
-		
+
 		if (currentSpeed > 0) {
 			selectedAction = Optional.of(new MoveForward(currentSpeed * dt));
 		}
 
 	}
-		
+
 	private boolean detectedNearCar() {
 		Optional<CarAgentInfo> car = currentPercept.nearestCarInFront();
 		if (car.isEmpty()) {
@@ -109,7 +109,7 @@ public class CarAgentExtended extends CarAgent {
 			return dist < CAR_NEAR_DIST;
 		}
 	}
-	
+
 	private boolean detectedRedOrOrgangeSemNear() {
 		Optional<TrafficLightInfo> sem = currentPercept.nearestSem();
 		if (sem.isEmpty() || sem.get().sem().isGreen()) {
@@ -125,7 +125,7 @@ public class CarAgentExtended extends CarAgent {
 		Optional<TrafficLightInfo> sem = currentPercept.nearestSem();
 		return (!sem.isEmpty() && sem.get().sem().isGreen());
 	}
-	
+
 	private boolean carFarEnough() {
 		Optional<CarAgentInfo> car = currentPercept.nearestCarInFront();
 		if (car.isEmpty()) {
