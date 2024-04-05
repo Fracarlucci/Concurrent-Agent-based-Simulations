@@ -59,6 +59,7 @@ public abstract class AbstractSimulation extends Thread {
 	 */
 	public synchronized void run(int numSteps) {
 		notifyAll();
+		System.out.println("Notify");
 
 		startWallTime = System.currentTimeMillis();
 

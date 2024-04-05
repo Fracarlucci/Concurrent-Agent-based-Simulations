@@ -34,20 +34,22 @@ public abstract class CarAgent extends AbstractAgent {
   }
 
   @Override
-  public synchronized void run() {
-    while (true) {
-      try {
-        // TODO aggiungere il while
-        System.out.println("I'm waiting.. ID: " + super.getAgentId());
-        wait();
+  public void run() {
+    synchronized(this) {
+      while (true) {
+        try {
+          // TODO aggiungere il while
+          System.out.println("I'm waiting.. ID: " + super.getAgentId());
+          wait();
 
-        System.out.println("I'm running.. ID: " + super.getAgentId());
+          System.out.println("I'm running.. ID: " + super.getAgentId());
 
-        step(super.getDt());
+          step(super.getDt());
 
 
-      } catch (InterruptedException e) {
-        System.out.println("Tirata eccezione");
+        } catch (InterruptedException e) {
+          System.out.println("Tirata eccezione");
+        }
       }
     }
   }

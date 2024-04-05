@@ -30,7 +30,6 @@ public abstract class AbstractAgent extends Thread {
 	 */
 	public synchronized void init(AbstractEnvironment env) {
 		this.env = env;
-		this.run();
 	}
 	
 	/**
