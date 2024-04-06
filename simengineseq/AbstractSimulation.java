@@ -1,14 +1,14 @@
 package pcd.ass01.simengineseq;
 
+import pcd.ass01.simtrafficbase.ThreadManager;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Base class for defining concrete simulations
  */
-public abstract class AbstractSimulation extends Thread {
+public abstract class AbstractSimulation {
 
   /* environment of the simulation */
   private AbstractEnvironment env;
@@ -34,12 +34,10 @@ public abstract class AbstractSimulation extends Thread {
   private long startWallTime;
   private long endWallTime;
   private long averageTimePerStep;
-  private final Lock lock;
 
   protected AbstractSimulation() {
     agents = new ArrayList<AbstractAgent>();
     listeners = new ArrayList<SimulationListener>();
-    lock = new ReentrantLock();
     toBeInSyncWithWallTime = false;
   }
 
@@ -54,21 +52,13 @@ public abstract class AbstractSimulation extends Thread {
    *
    * @param numSteps
    */
-  public synchronized void run(int numSteps) {
-    synchronized (lock) {
-      lock.notifyAll();
-
-      startWallTime = System.currentTimeMillis();
-    }
+  public void run(int numSteps) {
+    startWallTime = System.currentTimeMillis();
 
     /* initialize the env and the agents inside */
     int t = t0;
 
     env.init();
-    for (var a : agents) {
-      a.init(env);
-      a.start();
-    }
 
     this.notifyReset(t, agents, env);
 
@@ -82,10 +72,7 @@ public abstract class AbstractSimulation extends Thread {
       /* make a step */
 
       env.step(dt);
-      // TODO make atomic
-      for (var agent : agents) {
-        agent.step(dt);
-      }
+
       t += dt;
 
       notifyNewStep(t, agents, env);
@@ -111,12 +98,7 @@ public abstract class AbstractSimulation extends Thread {
     return averageTimePerStep;
   }
 
-  public Lock getLock() {
-    return lock;
-  }
-
   /* methods for configuring the simulation */
-
   protected void setupTimings(int t0, int dt) {
     this.dt = dt;
     this.t0 = t0;

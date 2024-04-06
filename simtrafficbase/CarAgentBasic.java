@@ -1,5 +1,7 @@
 package pcd.ass01.simtrafficbase;
 
+import pcd.ass01.simengineconcur.Barrier;
+
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 
@@ -27,12 +29,17 @@ public class CarAgentBasic extends CarAgent {
 
 	private int waitingTime;
 	
-	public CarAgentBasic(String id, RoadsEnv env, Road road, Lock envLock,
-					double initialPos, 
-					double acc, 
-					double dec,
-					double vmax) {
-		super(id, env, road, envLock, initialPos, acc, dec, vmax);
+	public CarAgentBasic(String id,
+						 RoadsEnv env,
+						 Road road,
+						 double initialPos,
+						 double acc,
+						 double dec,
+						 double vmax,
+						 int dt,
+						 Barrier actBarrier,
+						 Barrier stepBarrier) {
+		super(id, env, road, initialPos, acc, dec, vmax, dt, actBarrier, stepBarrier);
 		state = CarAgentState.STOPPED;
 	}
 	

@@ -37,7 +37,7 @@ public abstract class AbstractAgent extends Thread {
 	 * 
 	 * @param dt - logical time step
 	 */
-	abstract public void step(int dt);
+//	abstract public void step(int dt);
 	
 
 	public synchronized String getAgentId() {

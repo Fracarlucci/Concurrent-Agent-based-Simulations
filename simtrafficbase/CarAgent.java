@@ -1,8 +1,8 @@
 package pcd.ass01.simtrafficbase;
 
 import java.util.Optional;
-import java.util.concurrent.locks.Lock;
 
+import pcd.ass01.simengineconcur.Barrier;
 import pcd.ass01.simengineseq.*;
 
 /**
@@ -12,7 +12,6 @@ public abstract class CarAgent extends AbstractAgent {
 
   /* car model */
   protected double maxSpeed;
-  private final Lock envLock;
   protected double currentSpeed;
   protected double acceleration;
   protected double deceleration;
@@ -20,63 +19,58 @@ public abstract class CarAgent extends AbstractAgent {
   /* percept and action retrieved and submitted at each step */
   protected CarPercept currentPercept;
   protected Optional<Action> selectedAction;
+  private final int dt;
+  private final Barrier actBarrier;
+  private final Barrier stepBarrier;
 
 
-  public CarAgent(String id, RoadsEnv env, Road road, Lock envLock,
+  public CarAgent(String id, RoadsEnv env, Road road,
                   double initialPos,
                   double acc,
                   double dec,
-                  double vmax) {
+                  double vmax,
+                  int dt,
+                  Barrier actBarrier,
+                  Barrier stepBarrier) {
     super(id);
-    this.envLock = envLock;
     this.acceleration = acc;
     this.deceleration = dec;
     this.maxSpeed = vmax;
+    this.dt = dt;
+    this.actBarrier = actBarrier;
+    this.stepBarrier = stepBarrier;
     env.registerNewCar(this, road, initialPos);
   }
 
   @Override
   public synchronized void run() {
-    synchronized (envLock) {
-      while (true) {
-        try {
-          // TODO aggiungere il while
-          System.out.println("I'm waiting.. ID: " + envLock.toString());
-          envLock.wait();
-
-          System.out.println("I'm running.. ID: " + super.getAgentId());
-
-          step(super.getDt());
-
-
-        } catch (InterruptedException e) {
-          System.out.println("Tirata eccezione");
-        }
-      }
+    while (true) {
+      stepBarrier.waitBefore();
+      this.step();
     }
   }
 
   /**
    * Basic behaviour of a car agent structured into a sense/decide/act structure
    */
-  public synchronized void step(int dt) {
+  public void step() {
+    actBarrier.waitBefore();
+    this.senseAndDecide(this.dt);
+    actBarrier.waitBefore();
+    this.act();
+  }
 
-    /* sense */
-
+  public void senseAndDecide(int dt) {
     AbstractEnvironment env = this.getEnv();
     currentPercept = (CarPercept) env.getCurrentPercepts(getAgentId());
 
     /* decide */
-
     selectedAction = Optional.empty();
-
     decide(dt);
+  }
 
-    /* act */
-
-    if (selectedAction.isPresent()) {
-      env.doAction(getAgentId(), selectedAction.get());
-    }
+  public void act() {
+      selectedAction.ifPresent(action -> this.getEnv().doAction(super.getAgentId(), action));
   }
 
   /**

@@ -5,6 +5,7 @@ import pcd.ass01.simengineconcur.BarrierImpl;
 import pcd.ass01.simengineseq.AbstractAgent;
 import pcd.ass01.simengineseq.AbstractSimulation;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ThreadManager {
@@ -13,17 +14,22 @@ public class ThreadManager {
     private RoadsEnv env;
     private List<CarAgent> carAgents;
     private final Barrier stepBarrier;
+
+
     private final Barrier actBarrier;
     private final AbstractSimulation sim;
     private int nSteps = 0;
 
 
-    public ThreadManager(int nTreads, AbstractSimulation sim, int nSteps, List<CarAgent> carAgents) {
+    public ThreadManager(int nTreads, AbstractSimulation sim) {
         this.nThreads = nTreads;
         this.stepBarrier = new BarrierImpl(nTreads);
         this.actBarrier = new BarrierImpl(nTreads);
         this.sim = sim;
-        this.nSteps = nSteps;
+        this.carAgents = new LinkedList<>();
+    }
+
+    public void generateCars(List<CarAgent> carAgents) {
         this.carAgents = carAgents;
     }
 
@@ -38,8 +44,21 @@ public class ThreadManager {
 
 //                this.sim.notifyNewStep(actualSteps, (AbstractAgent)carAgents, env);
 
+//                t += this.dt;
+
                 actualSteps++;
             }
         }).start();
+    }
+
+    public void setSteps(int nSteps) {
+        this.nSteps = nSteps;
+    }
+    public Barrier getStepBarrier() {
+        return stepBarrier;
+    }
+
+    public Barrier getActBarrier() {
+        return actBarrier;
     }
 }

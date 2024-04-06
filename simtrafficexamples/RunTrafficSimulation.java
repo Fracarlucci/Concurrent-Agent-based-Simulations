@@ -7,9 +7,10 @@ package pcd.ass01.simtrafficexamples;
  */
 public class RunTrafficSimulation {
 
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 
-		 var simulation = new TrafficSimulationSingleRoadTwoCars();
+//		int nThreads = Runtime.getRuntime().availableProcessors();
+	 	var simulation = new TrafficSimulationSingleRoadTwoCars(2);
 //		 var simulation = new TrafficSimulationSingleRoadSeveralCars();
 		// var simulation = new TrafficSimulationSingleRoadWithTrafficLightTwoCars();
 //		var simulation = new TrafficSimulationWithCrossRoads();
