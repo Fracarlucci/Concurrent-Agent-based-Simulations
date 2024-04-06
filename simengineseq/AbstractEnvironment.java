@@ -8,13 +8,14 @@ package pcd.ass01.simengineseq;
 public abstract class AbstractEnvironment extends Thread {
 
 	private String id;
-	
+	private int nSteps;
+
 	protected AbstractEnvironment(String id) {
 		this.id = id;		
 	}
 
 
-	public synchronized String getEnvId() {
+	public  String getEnvId() {
 		return id;
 	}
 	
@@ -49,4 +50,8 @@ public abstract class AbstractEnvironment extends Thread {
 	 * @param act - the action
 	 */
 	public abstract void doAction(String agentId, Action act);
+
+	public void setnSteps(int numSteps) {
+		this.nSteps = nSteps;
+	}
 }

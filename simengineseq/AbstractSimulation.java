@@ -53,37 +53,20 @@ public abstract class AbstractSimulation {
    * @param numSteps
    */
   public void run(int numSteps) {
+//    this.stopRequested = false;	// Shared variable.
+
     startWallTime = System.currentTimeMillis();
 
     /* initialize the env and the agents inside */
     int t = t0;
 
+    env.setnSteps(numSteps);
     env.init();
+
 
     this.notifyReset(t, agents, env);
 
     long timePerStep = 0;
-    int nSteps = 0;
-
-    while (nSteps < numSteps) {
-
-      currentWallTime = System.currentTimeMillis();
-
-      /* make a step */
-
-      env.step(dt);
-
-      t += dt;
-
-      notifyNewStep(t, agents, env);
-
-      nSteps++;
-      timePerStep += System.currentTimeMillis() - currentWallTime;
-
-      if (toBeInSyncWithWallTime) {
-        syncWithWallTime();
-      }
-    }
 
     endWallTime = System.currentTimeMillis();
     this.averageTimePerStep = timePerStep / numSteps;
@@ -129,7 +112,7 @@ public abstract class AbstractSimulation {
     }
   }
 
-  private void notifyNewStep(int t, List<AbstractAgent> agents, AbstractEnvironment env) {
+  public void notifyNewStep(int t, List<AbstractAgent> agents, AbstractEnvironment env) {
     for (var l : listeners) {
       l.notifyStepDone(t, agents, env);
     }
@@ -137,7 +120,7 @@ public abstract class AbstractSimulation {
 
   /* method to sync with wall time at a specified step rate */
 
-  private void syncWithWallTime() {
+  public void syncWithWallTime() {
     try {
       long newWallTime = System.currentTimeMillis();
       long delay = 1000 / this.nStepsPerSec;

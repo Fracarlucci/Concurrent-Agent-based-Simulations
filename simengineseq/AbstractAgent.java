@@ -28,7 +28,7 @@ public abstract class AbstractAgent extends Thread {
 	 * 
 	 * @param env
 	 */
-	 void init(AbstractEnvironment env) {
+	 public void init(AbstractEnvironment env) {
 		this.env = env;
 	}
 	
@@ -40,7 +40,7 @@ public abstract class AbstractAgent extends Thread {
 //	abstract public void step(int dt);
 	
 
-	public synchronized String getAgentId() {
+	public  String getAgentId() {
 		return myId;
 	}
 	
@@ -48,6 +48,6 @@ public abstract class AbstractAgent extends Thread {
 		return this.env;
 	}
 
-	protected synchronized void setDt(int dt) { this.dt = dt; }
-	protected synchronized int getDt() { return this.dt; }
+	public void setDt(int dt) { this.dt = dt; }
+	public int getDt() { return this.dt; }
 }

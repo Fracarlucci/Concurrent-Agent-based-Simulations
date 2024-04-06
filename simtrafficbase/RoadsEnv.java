@@ -33,7 +33,7 @@ public class RoadsEnv extends AbstractEnvironment {
 	}
 	
 	@Override
-	public synchronized void init() {
+	public void init() {
 		for (var tl: trafficLights) {
 			tl.init();
 		}
@@ -63,7 +63,7 @@ public class RoadsEnv extends AbstractEnvironment {
 	}
 
 	@Override
-	public synchronized Percept getCurrentPercepts(String agentId) {
+	public Percept getCurrentPercepts(String agentId) {
 		
 		CarAgentInfo carInfo = registeredCars.get(agentId);
 		double pos = carInfo.getPos();
@@ -98,7 +98,7 @@ public class RoadsEnv extends AbstractEnvironment {
 	
 	
 	@Override
-	public synchronized void doAction(String agentId, Action act) {
+	public void doAction(String agentId, Action act) {
 		switch (act) {
 		case MoveForward mv: {
 			CarAgentInfo info = registeredCars.get(agentId);
@@ -124,15 +124,15 @@ public class RoadsEnv extends AbstractEnvironment {
 	}
 	
 	
-	public synchronized List<CarAgentInfo> getAgentInfo(){
+	public List<CarAgentInfo> getAgentInfo(){
 		return this.registeredCars.entrySet().stream().map(el -> el.getValue()).toList();
 	}
 
-	public synchronized List<Road> getRoads(){
+	public List<Road> getRoads(){
 		return roads;
 	}
 	
-	public synchronized List<TrafficLight> getTrafficLights(){
+	public List<TrafficLight> getTrafficLights(){
 		return trafficLights;
 	}
 }
