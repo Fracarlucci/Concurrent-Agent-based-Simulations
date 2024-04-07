@@ -43,7 +43,7 @@ public class TrafficLight extends Thread{
 
 	public void step() {
 		actBarrier.waitBefore();
-		actBarrier.waitBefore();
+		stepBarrier.waitBefore();
 	}
 	
 	public void init(AbstractEnvironment env) {

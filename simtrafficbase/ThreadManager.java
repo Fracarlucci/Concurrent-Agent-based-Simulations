@@ -56,10 +56,13 @@ public class ThreadManager {
             ca.start();
         });
 
-        trafficLights.forEach(tl -> {
-            tl.init(this.env);
-            tl.start();
-        });
+        if(trafficLights != null) {
+            trafficLights.forEach(tl -> {
+                tl.init(this.env);
+                tl.start();
+            });
+        }
+
 
         new Thread(() -> {
             int actualSteps = 0;

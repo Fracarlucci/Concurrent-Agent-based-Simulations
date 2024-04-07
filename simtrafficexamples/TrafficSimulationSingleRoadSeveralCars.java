@@ -32,6 +32,7 @@ public class TrafficSimulationSingleRoadSeveralCars extends AbstractSimulation {
 		final Barrier actBarrier = threadManager.getActBarrier();
 		int t0 = 0;
 		int dt = 1;
+		final int nCyclesPerSec = 25;
 
 		this.setupTimings(0, 1);
 		threadManager.setupStartTiming(t0);
@@ -40,7 +41,7 @@ public class TrafficSimulationSingleRoadSeveralCars extends AbstractSimulation {
 
 		Road road = env.createRoad(new P2d(0,300), new P2d(1500,300));
 
-		int nCars = 21;
+		int nCars = 8;
 
 		for (int i = 0; i < nCars; i++) {
 
@@ -67,7 +68,8 @@ public class TrafficSimulationSingleRoadSeveralCars extends AbstractSimulation {
 			cars.add(car);
 		}
 		threadManager.generateCars(cars);
-		this.syncWithTime(25);
+		threadManager.setnCyclesPerSec(nCyclesPerSec);
+		this.syncWithTime(nCyclesPerSec);
 	}
 
 	@Override
