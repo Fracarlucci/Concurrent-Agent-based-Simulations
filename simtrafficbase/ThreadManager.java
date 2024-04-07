@@ -118,9 +118,11 @@ public class ThreadManager {
                 System.out.println("Steps: " + actualSteps);
             }
 //          this.stepBarrier.waitBefore(() -> this.sim.stop());
-            System.out.println("Finish: " + actualSteps);
             timePerStep += System.currentTimeMillis() - startStepTime;
             totalTime = System.currentTimeMillis() - startWallTime;
+            System.out.println("Finish: " + actualSteps);
+            System.out.println("Completed in " + totalTime + "ms");
+
         }).start();
     }
 
@@ -137,5 +139,9 @@ public class ThreadManager {
 
     public void setnCyclesPerSec(int nCyclesPerSec) {
         this.nCyclesPerSec = nCyclesPerSec;
+    }
+
+    public long getTotalTime() {
+        return totalTime;
     }
 }
