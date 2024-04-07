@@ -19,13 +19,10 @@ public class TrafficSimulationSingleRoadTwoCars extends AbstractSimulation {
 	public TrafficSimulationSingleRoadTwoCars(int nThreads) {
 		super();
 		this.env = new RoadsEnv();
-        this.threadManager = new ThreadManager(nThreads, this, env);
+        this.threadManager = new ThreadManager(nThreads, 0, this, env);
     }
 
 	public void setup() {
-
-		final Barrier stepBarrier = threadManager.getStepBarrier();
-		final Barrier actBarrier = threadManager.getActBarrier();
 
 		int t0 = 0;
 		int dt = 1;
@@ -36,9 +33,9 @@ public class TrafficSimulationSingleRoadTwoCars extends AbstractSimulation {
 
 		this.setupEnvironment(env);
 		Road r = env.createRoad(new P2d(0,300), new P2d(1500,300));
-		CarAgent car1 = new CarAgentBasic("car-1", env, r,0, 0.1, 0.2, 8, dt, actBarrier, stepBarrier);
+		CarAgent car1 = new CarAgentBasic("car-1", env, r,0, 0.1, 0.2, 8);
 		this.addAgent(car1);
-		CarAgent car2 = new CarAgentBasic("car-2", env, r,100, 0.1, 0.1, 7, dt, actBarrier, stepBarrier);
+		CarAgent car2 = new CarAgentBasic("car-2", env, r,100, 0.1, 0.1, 7);
 		this.addAgent(car2);
 
 		/* sync with wall-time: 25 steps per sec */

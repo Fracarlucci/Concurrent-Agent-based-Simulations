@@ -22,14 +22,12 @@ public class TrafficSimulationSingleRoadSeveralCars extends AbstractSimulation {
 	public TrafficSimulationSingleRoadSeveralCars(int nThreads) {
 		super();
 		this.env = new RoadsEnv();
-		this.threadManager = new ThreadManager(nThreads, this, env);
+		this.threadManager = new ThreadManager(nThreads, 0, this, env);
 	}
 
 	public void setup() {
 
 		List<CarAgent> cars = new LinkedList<>();
-		final Barrier stepBarrier = threadManager.getStepBarrier();
-		final Barrier actBarrier = threadManager.getActBarrier();
 		int t0 = 0;
 		int dt = 1;
 		final int nCyclesPerSec = 1000;
@@ -60,10 +58,7 @@ public class TrafficSimulationSingleRoadSeveralCars extends AbstractSimulation {
 					initialPos,
 					carAcceleration,
 					carDeceleration,
-					carMaxSpeed,
-					dt,
-					actBarrier,
-					stepBarrier);
+					carMaxSpeed);
 			this.addAgent(car);
 			cars.add(car);
 		}

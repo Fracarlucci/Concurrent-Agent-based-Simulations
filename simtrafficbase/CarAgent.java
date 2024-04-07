@@ -2,7 +2,6 @@ package pcd.ass01.simtrafficbase;
 
 import java.util.Optional;
 
-import pcd.ass01.simengineconcur.Barrier;
 import pcd.ass01.simengineseq.*;
 
 /**
@@ -19,26 +18,17 @@ public abstract class CarAgent extends AbstractAgent {
   /* percept and action retrieved and submitted at each step */
   protected CarPercept currentPercept;
   protected Optional<Action> selectedAction;
-  private final int dt;
-  private final Barrier actBarrier;
-  private final Barrier stepBarrier;
 
 
   public CarAgent(String id, RoadsEnv env, Road road,
                   double initialPos,
                   double acc,
                   double dec,
-                  double vmax,
-                  int dt,
-                  Barrier actBarrier,
-                  Barrier stepBarrier) {
+                  double vmax) {
     super(id);
     this.acceleration = acc;
     this.deceleration = dec;
     this.maxSpeed = vmax;
-    this.dt = dt;
-    this.actBarrier = actBarrier;
-    this.stepBarrier = stepBarrier;
     env.registerNewCar(this, road, initialPos);
   }
 

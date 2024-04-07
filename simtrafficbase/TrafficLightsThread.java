@@ -3,6 +3,8 @@ package pcd.ass01.simtrafficbase;
 import pcd.ass01.simengineconcur.Barrier;
 import pcd.ass01.simengineseq.AbstractEnvironment;
 import pcd.ass01.simengineseq.AbstractSimulation;
+
+import java.util.LinkedList;
 import java.util.List;
 
 public class TrafficLightsThread extends Thread {
@@ -14,22 +16,22 @@ public class TrafficLightsThread extends Thread {
     private final int dt;
 
 
-    public TrafficLightsThread(Barrier actBarrier, Barrier stepBarrier, List<TrafficLight> trafficLights, AbstractSimulation sim, int dt) {
+    public TrafficLightsThread(Barrier actBarrier, Barrier stepBarrier, AbstractSimulation sim, int dt) {
         this.actBarrier = actBarrier;
         this.stepBarrier = stepBarrier;
-        this.trafficLights = trafficLights;
+        this.trafficLights = new LinkedList<>();
         this.sim = sim;
         this.dt = dt;
+    }
+
+    public void init() {
+        this.trafficLights.forEach(TrafficLight::init);
     }
 
     public void addTrafficLight(TrafficLight tl) {
         this.trafficLights.add(tl);
     }
 
-    public void initTrafficLights() {
-        this.trafficLights.forEach(TrafficLight::init);
-    }
-    
     public void run() {
         while(true) {
             stepBarrier.waitBefore(); 

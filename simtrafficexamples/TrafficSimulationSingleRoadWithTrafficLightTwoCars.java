@@ -1,46 +1,47 @@
-//package pcd.ass01.simtrafficexamples;
-//
-//import pcd.ass01.simengineseq.AbstractSimulation;
-//import pcd.ass01.simtrafficbase.CarAgent;
-////import pcd.ass01.simtrafficbase.CarAgentExtended;
-//import pcd.ass01.simtrafficbase.P2d;
-//import pcd.ass01.simtrafficbase.Road;
-//import pcd.ass01.simtrafficbase.RoadsEnv;
-//import pcd.ass01.simtrafficbase.TrafficLight;
-//import pcd.ass01.simtrafficbase.TrafficLight.TrafficLightState;
-//
-///**
-// *
-// * Traffic Simulation about 2 cars moving on a single road, with one semaphore
-// *
-// */
-//public class TrafficSimulationSingleRoadWithTrafficLightTwoCars extends AbstractSimulation {
-//
-//	public TrafficSimulationSingleRoadWithTrafficLightTwoCars() {
-//		super();
-//	}
-//
-//	public void setup() {
-//
-//		this.setupTimings(0, 1);
-//
-//		RoadsEnv env = new RoadsEnv();
-//		this.setupEnvironment(env);
-//
-//		Road r = env.createRoad(new P2d(0,300), new P2d(1500,300));
-//
-//		TrafficLight tl = env.createTrafficLight(new P2d(740,300), TrafficLight.TrafficLightState.GREEN, 75, 25, 100);
-//		r.addTrafficLight(tl, 740);
+package pcd.ass01.simtrafficexamples;
 
-/////////// threadManager.generateTrafficLight(trafficLight);
+import pcd.ass01.simengineseq.AbstractSimulation;
+import pcd.ass01.simtrafficbase.*;
+//import pcd.ass01.simtrafficbase.CarAgentExtended;
+import pcd.ass01.simtrafficbase.TrafficLight.TrafficLightState;
 
-//
-//		CarAgent car1 = new CarAgentExtended("car-1", env, r, 0, 0.1, 0.3, 6);
-//		this.addAgent(car1);
-//		CarAgent car2 = new CarAgentExtended("car-2", env, r, 100, 0.1, 0.3, 5);
-//		this.addAgent(car2);
-//
-//		this.syncWithTime(25);
-//	}
-//
-//}
+/**
+ *
+ * Traffic Simulation about 2 cars moving on a single road, with one semaphore
+ *
+ */
+public class TrafficSimulationSingleRoadWithTrafficLightTwoCars extends AbstractSimulation {
+
+    private final ThreadManager threadManager;
+    private final RoadsEnv env;
+
+	public TrafficSimulationSingleRoadWithTrafficLightTwoCars(int nThreads) {
+		super();
+        this.env = new RoadsEnv();
+        this.threadManager = new ThreadManager(nThreads, 0, this, env);
+	}
+
+	public void setup() {
+
+		this.setupTimings(0, 1);
+
+		RoadsEnv env = new RoadsEnv();
+		this.setupEnvironment(env);
+
+		Road r = env.createRoad(new P2d(0,300), new P2d(1500,300));
+
+		TrafficLight tl = env.createTrafficLight(new P2d(740,300), TrafficLight.TrafficLightState.GREEN, 75, 25, 100);
+		r.addTrafficLight(tl, 740);
+
+//		threadManager.generateTrafficLight(trafficLight);
+
+
+		CarAgent car1 = new CarAgentExtended("car-1", env, r, 0, 0.1, 0.3, 6);
+		this.addAgent(car1);
+		CarAgent car2 = new CarAgentExtended("car-2", env, r, 100, 0.1, 0.3, 5);
+		this.addAgent(car2);
+
+		this.syncWithTime(25);
+	}
+
+}
