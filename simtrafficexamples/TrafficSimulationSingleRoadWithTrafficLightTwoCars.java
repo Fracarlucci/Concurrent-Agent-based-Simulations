@@ -55,5 +55,4 @@ public class TrafficSimulationSingleRoadWithTrafficLightTwoCars extends Abstract
 		this.threadManager.setSteps(nSteps);
 		this.threadManager.startThreads(1);
 	}
-
 }
