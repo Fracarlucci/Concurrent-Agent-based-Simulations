@@ -36,7 +36,7 @@ public class RoadsEnv extends AbstractEnvironment {
 	@Override
 	public void init() {
 		for (var tl: trafficLights) {
-//			tl.init();
+			tl.init();
 		}
 	}
 	

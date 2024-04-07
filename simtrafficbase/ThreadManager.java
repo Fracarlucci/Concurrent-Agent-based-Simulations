@@ -29,8 +29,8 @@ public class ThreadManager {
     public ThreadManager(int nThreadsPerCars, int nThreadsPerTrafficLights, AbstractSimulation sim, RoadsEnv env) {
         this.nThreadsPerCars = nThreadsPerCars;
         this.nThreadsPerTrafficLights = nThreadsPerTrafficLights;
-        this.stepBarrier = new BarrierImpl(nThreadsPerCars + 1);
-        this.actBarrier = new BarrierImpl(nThreadsPerCars);
+        this.stepBarrier = new BarrierImpl(nThreadsPerCars + nThreadsPerTrafficLights + 1);
+        this.actBarrier = new BarrierImpl(nThreadsPerCars + nThreadsPerTrafficLights);
         this.sim = sim;
         this.agentsThreads = new LinkedList<>();
         this.trafficLightsThreads = new LinkedList<>();

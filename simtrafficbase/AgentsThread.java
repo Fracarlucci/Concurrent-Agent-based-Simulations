@@ -35,9 +35,9 @@ public class AgentsThread extends Thread {
   }
 
   public void step() {
-    actBarrier.waitBefore();  // Wait that all trafficlights are updated (have done their step).
+    actBarrier.waitBefore();
     this.carAgents.forEach(car -> car.senseAndDecide(this.dt));
-    actBarrier.waitBefore();  // Wait that all other car agents have decided.                // Attende che tutti i thread abbiano preso le decisioni.
+    actBarrier.waitBefore();
     this.carAgents.forEach(car -> car.act());
   }
 

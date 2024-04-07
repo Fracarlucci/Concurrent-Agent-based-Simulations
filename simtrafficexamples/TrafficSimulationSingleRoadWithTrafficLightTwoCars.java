@@ -30,7 +30,6 @@ public class TrafficSimulationSingleRoadWithTrafficLightTwoCars extends Abstract
 		this.setupTimings(0, 1);
 		threadManager.setupStartTiming(0);
 
-		RoadsEnv env = new RoadsEnv();
 		this.setupEnvironment(env);
 
 		Road r = env.createRoad(new P2d(0,300), new P2d(1500,300));
@@ -49,6 +48,12 @@ public class TrafficSimulationSingleRoadWithTrafficLightTwoCars extends Abstract
 		threadManager.generateCars(List.of(car1, car2), 1);
 		threadManager.setnCyclesPerSec(nCyclesPerSec);
 		this.syncWithTime(nCyclesPerSec);
+	}
+
+	@Override
+	public void run(int nSteps) {
+		this.threadManager.setSteps(nSteps);
+		this.threadManager.startThreads(1);
 	}
 
 }
