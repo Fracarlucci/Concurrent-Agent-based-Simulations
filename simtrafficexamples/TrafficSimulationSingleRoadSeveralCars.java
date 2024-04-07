@@ -71,7 +71,7 @@ public class TrafficSimulationSingleRoadSeveralCars extends AbstractSimulation {
 	}
 
 	@Override
-	public void run(int nSteps) { //TODO rm par
+	public void run(int nSteps) {
 		this.threadManager.setSteps(nSteps);
 		this.threadManager.startThreads(1);
 	}
