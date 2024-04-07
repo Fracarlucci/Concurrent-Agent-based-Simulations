@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Lock;
  * Base  class for defining types of agents taking part to the simulation
  * 
  */
-public abstract class AbstractAgent extends Thread {
+public abstract class AbstractAgent {
 	
 	private String myId;
 	private AbstractEnvironment env;
@@ -32,11 +32,7 @@ public abstract class AbstractAgent extends Thread {
 		this.env = env;
 	}
 	
-	/**
-	 * This method is called at each step of the simulation
-	 * 
-	 * @param dt - logical time step
-	 */
+
 //	abstract public void step(int dt);
 	
 

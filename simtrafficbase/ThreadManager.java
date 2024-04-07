@@ -7,12 +7,14 @@ import pcd.ass01.simengineseq.AbstractSimulation;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class ThreadManager {
 
     private final int nThreads;
     private RoadsEnv env;
-    private List<AbstractAgent> carAgents;
+    private List<AgentsThread> agentsThreads;
     private List<TrafficLight> trafficLights;
     private final Barrier stepBarrier;
 
@@ -24,35 +26,44 @@ public class ThreadManager {
     private int nCyclesPerSec = 0;
     private long totalTime=0;
 
-    private int t;
-
-
-
-
-
     public ThreadManager(int nTreads, AbstractSimulation sim, RoadsEnv env) {
         this.nThreads = nTreads;
         this.stepBarrier = new BarrierImpl(nTreads + 1);
         this.actBarrier = new BarrierImpl(nTreads);
         this.sim = sim;
-        this.carAgents = new LinkedList<>();
+        this.agentsThreads = new LinkedList<>();
         this.env = env;
     }
 
-    public void generateCars(List<AbstractAgent> carAgents) {
-        this.carAgents = carAgents;
+    public void generateCars(List<CarAgent> carAgents, int dt) {
+        this.agentsThreads.clear();
+        var iter = carAgents.iterator(); // Iterator of cars.
+        final int carsPerThread = carAgents.size() / nThreads;
+        int remainingCars = carAgents.size() % nThreads;
+
+        for (int i = 0; i < nThreads; i++) {
+
+            AgentsThread th = new AgentsThread(actBarrier, stepBarrier, dt, sim);
+            agentsThreads.add(th);
+
+            IntStream.range(0, carsPerThread).forEach(j -> th.addCar(iter.next()));
+
+            if (remainingCars > 0) {
+                remainingCars--;
+                th.addCar(iter.next());
+            }
+        }
     }
 
     public void generateTrafficLight(TrafficLight trafficLight) {
         this.trafficLights.add(trafficLight);
     }
     public void setupStartTiming(final int t) {
-        this.t = t;
     }
 
     public void startThreads(int dt) {
-        carAgents.forEach(ca -> {
-            ca.init(env);
+        agentsThreads.forEach(ca -> {
+            ca.initCars(env);
             ca.start();
         });
 
@@ -80,7 +91,7 @@ public class ThreadManager {
                 }
                 t += dt;
                 currentWallTime = System.currentTimeMillis();
-                this.sim.notifyNewStep(t, carAgents, env);
+                this.sim.notifyNewStep(t, env);
 
                 if(nCyclesPerSec >0){
                     sim.syncWithWallTime(currentWallTime);

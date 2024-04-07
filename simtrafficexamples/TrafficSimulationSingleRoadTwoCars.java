@@ -44,7 +44,7 @@ public class TrafficSimulationSingleRoadTwoCars extends AbstractSimulation {
 		/* sync with wall-time: 25 steps per sec */
 		this.syncWithTime(nCyclesPerSec);
 		threadManager.setnCyclesPerSec(nCyclesPerSec);
-		threadManager.generateCars(List.of(car1,car2));
+		threadManager.generateCars(List.of(car1,car2), dt);
 	}
 
 	@Override

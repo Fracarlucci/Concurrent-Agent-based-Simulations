@@ -23,7 +23,7 @@ public class TrafficSimulationSingleRoadMassiveNumberOfCars extends AbstractSimu
 
 	public void setup() {
 
-        List<AbstractAgent> cars = new LinkedList<>();
+        List<CarAgent> cars = new LinkedList<>();
         final Barrier stepBarrier = threadManager.getStepBarrier();
         final Barrier actBarrier = threadManager.getActBarrier();
         int t0 = 0;
@@ -60,7 +60,7 @@ public class TrafficSimulationSingleRoadMassiveNumberOfCars extends AbstractSimu
 
             /* no sync with wall-time */
 		}
-        threadManager.generateCars(cars);
+        threadManager.generateCars(cars, dt);
     }
 
     @Override

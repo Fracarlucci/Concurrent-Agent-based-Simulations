@@ -42,26 +42,12 @@ public abstract class CarAgent extends AbstractAgent {
     env.registerNewCar(this, road, initialPos);
   }
 
-  @Override
-  public void run() {
-    while (true) {
-      stepBarrier.waitBefore();
-//      log("Init Step");
-      this.step();
-    }
-  }
-
   /**
    * Basic behaviour of a car agent structured into a sense/decide/act structure
    */
-  public void step() {
-    actBarrier.waitBefore();
-    this.senseAndDecide(this.dt);
-//    log("Finished Deciding");
-    actBarrier.waitBefore();
-    this.act();
-//    log("Acting");
-  }
+//  public void step() {
+//
+//  }
 
   public void senseAndDecide(int dt) {
     AbstractEnvironment env = this.getEnv();

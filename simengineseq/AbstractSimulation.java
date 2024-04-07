@@ -112,7 +112,7 @@ public abstract class AbstractSimulation {
     }
   }
 
-  public void notifyNewStep(int t, List<AbstractAgent> agents, AbstractEnvironment env) {
+  public void notifyNewStep(int t, AbstractEnvironment env) {
     for (var l : listeners) {
       l.notifyStepDone(t, agents, env);
     }
