@@ -7,49 +7,25 @@ import pcd.ass01.simengineseq.AbstractEnvironment;
  * Class modeling the structure and behaviour of a traffic light
  *  
  */
-public class TrafficLight extends Thread{
-
-	private AbstractEnvironment env;
+public class TrafficLight {
 
 	public static enum TrafficLightState {GREEN, YELLOW, RED}
 	private TrafficLightState state, initialState;
 	private int currentTimeInState;
 	private int redDuration, greenDuration, yellowDuration;
 	private P2d pos;
-	private final int dt;
-	private final Barrier actBarrier;
-	private final Barrier stepBarrier;
 	
-	public TrafficLight(P2d pos, TrafficLightState initialState, int greenDuration, int yellowDuration, int redDuration, int dt,
-						Barrier actBarrier,
-						Barrier stepBarrier) {
+	public TrafficLight(P2d pos, TrafficLightState initialState, int greenDuration, int yellowDuration, int redDuration) {
 		this.redDuration = redDuration;
 		this.greenDuration = greenDuration;
 		this.yellowDuration = yellowDuration;
 		this.pos = pos;
 		this.initialState = initialState;
-		this.dt = dt;
-		this.actBarrier = actBarrier;
-		this.stepBarrier = stepBarrier;
-	}
-
-	@Override
-	public void run() {
-		while (true) {
-			stepBarrier.waitBefore();
-			this.step();
-		}
-	}
-
-	public void step() {
-		actBarrier.waitBefore();
-		stepBarrier.waitBefore();
 	}
 	
-	public void init(AbstractEnvironment env) {
+	public void init() {
 		state = initialState;
 		currentTimeInState = 0;
-		this.env = env;
 	}
 
 	public void step(int dt) {
