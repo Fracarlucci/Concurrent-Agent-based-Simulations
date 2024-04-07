@@ -1,5 +1,6 @@
 package pcd.ass01.simengineseq;
 
+import pcd.ass01.simtrafficbase.GUIMonitor;
 import pcd.ass01.simtrafficbase.ThreadManager;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public abstract class AbstractSimulation {
   private long startWallTime;
   private long endWallTime;
   private long averageTimePerStep;
+  private volatile Boolean stop = true;
+  private GUIMonitor monitor = new GUIMonitor();
 
   protected AbstractSimulation() {
     agents = new ArrayList<AbstractAgent>();
@@ -129,5 +132,18 @@ public abstract class AbstractSimulation {
       }
     } catch (Exception ex) {
     }
+  }
+
+  public boolean isStopped(){
+    this.monitor.requestRead();
+    boolean state = this.stop;
+    this.monitor.releaseRead();
+    return state;
+  }
+
+  public void stop(){
+    this.monitor.requestWrite();
+    this.stop = true;
+    this.monitor.releaseWrite();
   }
 }

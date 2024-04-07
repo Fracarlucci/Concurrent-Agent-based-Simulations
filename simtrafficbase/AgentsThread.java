@@ -35,15 +35,15 @@ public class AgentsThread extends Thread {
   }
 
   public void step() {
-    actBarrier.waitBefore();
+    actBarrier.waitBefore(simulation.isStopped());
     this.carAgents.forEach(car -> car.senseAndDecide(this.dt));
-    actBarrier.waitBefore();
+    actBarrier.waitBefore(simulation.isStopped());
     this.carAgents.forEach(car -> car.act());
   }
 
   public void run() {
     while(true) {
-      stepBarrier.waitBefore();
+      stepBarrier.waitBefore(simulation.isStopped());
       this.step();
     }
   }

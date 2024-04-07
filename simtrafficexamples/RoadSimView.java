@@ -2,12 +2,15 @@ package pcd.ass01.simtrafficexamples;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import pcd.ass01.simengineseq.AbstractAgent;
 import pcd.ass01.simengineseq.AbstractEnvironment;
+import pcd.ass01.simengineseq.AbstractSimulation;
 import pcd.ass01.simengineseq.SimulationListener;
 import pcd.ass01.simtrafficbase.CarAgentInfo;
 import pcd.ass01.simtrafficbase.Road;
@@ -20,22 +23,60 @@ import javax.swing.*;
 
 public class RoadSimView extends JFrame implements SimulationListener {
 
-	private RoadSimViewPanel panel;
+	final private RoadSimViewPanel panel;
 	private static final int CAR_DRAW_SIZE = 10;
 	
-	public RoadSimView() {
+	public RoadSimView(AbstractSimulation sim) {
 		super("RoadSim View");
 		setSize(1500,600);
-			
-		panel = new RoadSimViewPanel(1500,600); 
+
+		panel = new RoadSimViewPanel(1500,600);
 		panel.setSize(1500, 600);
 
-		JPanel cp = new JPanel();
+		final JPanel cp = new JPanel();
+		final JPanel menu = new JPanel();
 		LayoutManager layout = new BorderLayout();
 		cp.setLayout(layout);
-		cp.add(BorderLayout.CENTER,panel);
-		setContentPane(cp);		
-		
+		cp.add(BorderLayout.CENTER, panel);
+		final JButton start = new JButton("Start");
+		final JButton stop = new JButton("Stop");
+		final JLabel label = new JLabel("Steps: ");
+		final JTextField nStepsField = new JFormattedTextField("100");
+		nStepsField.setColumns(4);
+		stop.setEnabled(false);
+
+		start.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int nSteps = Integer.parseInt(nStepsField.getText());
+
+					sim.run(nSteps);
+
+					start.setEnabled(false);
+					stop.setEnabled(true);
+				} catch (Exception ex) {
+					System.out.println(ex);
+				}
+			}
+		});
+		stop.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					sim.stop();
+
+					start.setEnabled(true);
+					stop.setEnabled(false);
+				}
+		});
+		menu.setLayout(new FlowLayout());
+		menu.add(start);
+		menu.add(stop);
+		menu.add(label);
+		menu.add(nStepsField);
+		cp.add(menu, BorderLayout.SOUTH);
+		setContentPane(cp);
+
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 			
 	}

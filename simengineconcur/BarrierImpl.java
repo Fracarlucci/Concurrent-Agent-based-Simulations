@@ -19,7 +19,7 @@ public class BarrierImpl implements Barrier {
   }
 
   @Override
-  public void waitBefore() {
+  public void waitBefore(boolean isStopped) {
     try {
       mutex.lock();
       nWait++;
@@ -29,7 +29,9 @@ public class BarrierImpl implements Barrier {
         } while (nPassed == 0);
       } else {
         nWait = 0; // Reset of the barrier.
-        cond.signalAll();
+        if(!isStopped) {
+          cond.signalAll();
+        }
       }
       nPassed = (nPassed + 1) % nThreads;
 

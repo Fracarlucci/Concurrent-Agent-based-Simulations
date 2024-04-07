@@ -34,7 +34,7 @@ public class TrafficLightsThread extends Thread {
 
     public void run() {
         while(true) {
-            stepBarrier.waitBefore(); 
+            stepBarrier.waitBefore(sim.isStopped());
 //            if(sim.isStopped())
 //                break;
             this.step();
@@ -43,7 +43,7 @@ public class TrafficLightsThread extends Thread {
 
     public void step() {
         this.trafficLights.forEach(tl -> tl.step(this.dt));
-        actBarrier.waitBefore();
-        actBarrier.waitBefore();
+        actBarrier.waitBefore(sim.isStopped());
+        actBarrier.waitBefore(sim.isStopped());
     }
 }
