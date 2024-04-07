@@ -46,6 +46,7 @@ public abstract class CarAgent extends AbstractAgent {
   public void run() {
     while (true) {
       stepBarrier.waitBefore();
+      log("Init Step");
       this.step();
     }
   }
@@ -56,8 +57,10 @@ public abstract class CarAgent extends AbstractAgent {
   public void step() {
     actBarrier.waitBefore();
     this.senseAndDecide(this.dt);
+    log("Finished Deciding");
     actBarrier.waitBefore();
     this.act();
+    log("Acting");
   }
 
   public void senseAndDecide(int dt) {

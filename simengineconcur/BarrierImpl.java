@@ -20,19 +20,18 @@ public class BarrierImpl implements Barrier {
 
   @Override
   public void waitBefore() {
-    // Waiting implementation without runnable.
     try {
       mutex.lock();
       nWait++;
       if (nWait < nThreads) {
         do {
           cond.await();
-        } while (nPassed == 0); // Do-while useful for avoiding a double check on the two conditions.
+        } while (nPassed == 0);
       } else {
         nWait = 0; // Reset of the barrier.
         cond.signalAll();
       }
-      nPassed = (nPassed + 1) % nThreads; // Reset of the numer of passed threads after all threads have passed the barrier.
+      nPassed = (nPassed + 1) % nThreads;
 
     } catch (InterruptedException e) {
       e.printStackTrace();

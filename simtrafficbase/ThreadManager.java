@@ -20,8 +20,10 @@ public class ThreadManager {
     private final AbstractSimulation sim;
     private int nSteps = 0;
     private long currentWallTime;
-    private int nStepsPerSec = 0;
+    private int nCyclesPerSec = 0;
     private long totalTime=0;
+
+    private int t;
 
 
 
@@ -29,7 +31,7 @@ public class ThreadManager {
 
     public ThreadManager(int nTreads, AbstractSimulation sim, RoadsEnv env) {
         this.nThreads = nTreads;
-        this.stepBarrier = new BarrierImpl(nTreads);
+        this.stepBarrier = new BarrierImpl(nTreads + 1);
         this.actBarrier = new BarrierImpl(nTreads);
         this.sim = sim;
         this.carAgents = new LinkedList<>();
@@ -38,6 +40,10 @@ public class ThreadManager {
 
     public void generateCars(List<AbstractAgent> carAgents) {
         this.carAgents = carAgents;
+    }
+
+    public void setupStartTiming(final int t) {
+        this.t = t;
     }
 
     public void startThreads(int dt) {
@@ -63,8 +69,8 @@ public class ThreadManager {
                 currentWallTime = System.currentTimeMillis();
                 this.sim.notifyNewStep(t, carAgents, env);
 
-                if(nStepsPerSec>0){
-                    sim.syncWithWallTime();
+                if(nCyclesPerSec >0){
+                    sim.syncWithWallTime(currentWallTime);
                 }
                 actualSteps++;
                 startStepTime = System.currentTimeMillis();
@@ -72,7 +78,7 @@ public class ThreadManager {
 
             // Exited the loop, the simulation must stop, so the barrier waits that all cars and lights have stopped and after execute the runnable.
 //            this.stepBarrier.waitBefore(() -> this.sim.stop());
-
+            System.out.println("Finish: " + actualSteps);
             timePerStep += System.currentTimeMillis() - startStepTime;
             totalTime = System.currentTimeMillis() - startWallTime;
         }).start();
@@ -87,5 +93,9 @@ public class ThreadManager {
 
     public Barrier getActBarrier() {
         return actBarrier;
+    }
+
+    public void setnCyclesPerSec(int nCyclesPerSec) {
+        this.nCyclesPerSec = nCyclesPerSec;
     }
 }

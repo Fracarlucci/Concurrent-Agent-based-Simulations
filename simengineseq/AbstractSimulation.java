@@ -119,8 +119,7 @@ public abstract class AbstractSimulation {
   }
 
   /* method to sync with wall time at a specified step rate */
-
-  public void syncWithWallTime() {
+  public void syncWithWallTime(long currentWallTime) {
     try {
       long newWallTime = System.currentTimeMillis();
       long delay = 1000 / this.nStepsPerSec;
