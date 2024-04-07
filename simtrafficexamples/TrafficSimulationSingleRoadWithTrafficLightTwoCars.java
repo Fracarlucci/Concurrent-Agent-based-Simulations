@@ -5,6 +5,8 @@ import pcd.ass01.simtrafficbase.*;
 //import pcd.ass01.simtrafficbase.CarAgentExtended;
 import pcd.ass01.simtrafficbase.TrafficLight.TrafficLightState;
 
+import java.util.List;
+
 /**
  *
  * Traffic Simulation about 2 cars moving on a single road, with one semaphore
@@ -23,7 +25,10 @@ public class TrafficSimulationSingleRoadWithTrafficLightTwoCars extends Abstract
 
 	public void setup() {
 
+		final int nCyclesPerSec = 25;
+
 		this.setupTimings(0, 1);
+		threadManager.setupStartTiming(0);
 
 		RoadsEnv env = new RoadsEnv();
 		this.setupEnvironment(env);
@@ -33,7 +38,8 @@ public class TrafficSimulationSingleRoadWithTrafficLightTwoCars extends Abstract
 		TrafficLight tl = env.createTrafficLight(new P2d(740,300), TrafficLight.TrafficLightState.GREEN, 75, 25, 100);
 		r.addTrafficLight(tl, 740);
 
-//		threadManager.generateTrafficLight(trafficLight);
+
+		threadManager.generateTrafficLight(trafficLight);
 
 
 		CarAgent car1 = new CarAgentExtended("car-1", env, r, 0, 0.1, 0.3, 6);
@@ -41,7 +47,9 @@ public class TrafficSimulationSingleRoadWithTrafficLightTwoCars extends Abstract
 		CarAgent car2 = new CarAgentExtended("car-2", env, r, 100, 0.1, 0.3, 5);
 		this.addAgent(car2);
 
-		this.syncWithTime(25);
+		threadManager.generateCars(List.of(car1, car2), 1);
+		threadManager.setnCyclesPerSec(nCyclesPerSec);
+		this.syncWithTime(nCyclesPerSec);
 	}
 
 }
