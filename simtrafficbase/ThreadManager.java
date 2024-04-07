@@ -59,6 +59,7 @@ public class ThreadManager {
             long timePerStep = 0;
             long startStepTime = 0;
 
+            System.out.println(nSteps);
             while (actualSteps < this.nSteps) {
                 this.stepBarrier.waitBefore();
 
@@ -74,10 +75,9 @@ public class ThreadManager {
                 }
                 actualSteps++;
                 startStepTime = System.currentTimeMillis();
+                System.out.println("Steps: " + actualSteps);
             }
-
-            // Exited the loop, the simulation must stop, so the barrier waits that all cars and lights have stopped and after execute the runnable.
-//            this.stepBarrier.waitBefore(() -> this.sim.stop());
+//          this.stepBarrier.waitBefore(() -> this.sim.stop());
             System.out.println("Finish: " + actualSteps);
             timePerStep += System.currentTimeMillis() - startStepTime;
             totalTime = System.currentTimeMillis() - startWallTime;
