@@ -43,7 +43,7 @@ public class TrafficLightsThread extends Thread {
 
     public void step() {
         this.trafficLights.forEach(tl -> tl.step(this.dt));
-        stepBarrier.waitBefore();
+        actBarrier.waitBefore();
         actBarrier.waitBefore();
     }
 }
