@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import pcd.ass01.simengineconcur.Barrier;
 import pcd.ass01.simengineseq.AbstractEnvironment;
 import pcd.ass01.simengineseq.Action;
 import pcd.ass01.simengineseq.Percept;
@@ -35,7 +36,7 @@ public class RoadsEnv extends AbstractEnvironment {
 	@Override
 	public void init() {
 		for (var tl: trafficLights) {
-			tl.init();
+//			tl.init();
 		}
 	}
 	
@@ -56,8 +57,9 @@ public class RoadsEnv extends AbstractEnvironment {
 		return r;
 	}
 
-	public TrafficLight createTrafficLight(P2d pos, TrafficLight.TrafficLightState initialState, int greenDuration, int yellowDuration, int redDuration) {
-		TrafficLight tl = new TrafficLight(pos, initialState, greenDuration, yellowDuration, redDuration);
+	public TrafficLight createTrafficLight(P2d pos, TrafficLight.TrafficLightState initialState, int greenDuration, int yellowDuration, int redDuration,
+										   int dt, Barrier actBarrier, Barrier stepBarrier) {
+		TrafficLight tl = new TrafficLight(pos, initialState, greenDuration, yellowDuration, redDuration, dt, actBarrier, stepBarrier);
 		this.trafficLights.add(tl);
 		return tl;
 	}

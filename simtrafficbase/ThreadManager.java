@@ -13,6 +13,7 @@ public class ThreadManager {
     private final int nThreads;
     private RoadsEnv env;
     private List<AbstractAgent> carAgents;
+    private List<TrafficLight> trafficLights;
     private final Barrier stepBarrier;
 
 
@@ -42,6 +43,9 @@ public class ThreadManager {
         this.carAgents = carAgents;
     }
 
+    public void generateTrafficLight(TrafficLight trafficLight) {
+        this.trafficLights.add(trafficLight);
+    }
     public void setupStartTiming(final int t) {
         this.t = t;
     }
@@ -50,6 +54,11 @@ public class ThreadManager {
         carAgents.forEach(ca -> {
             ca.init(env);
             ca.start();
+        });
+
+        trafficLights.forEach(tl -> {
+            tl.init(this.env);
+            tl.start();
         });
 
         new Thread(() -> {

@@ -31,6 +31,9 @@
 //
 //		TrafficLight tl = env.createTrafficLight(new P2d(740,300), TrafficLight.TrafficLightState.GREEN, 75, 25, 100);
 //		r.addTrafficLight(tl, 740);
+
+/////////// threadManager.generateTrafficLight(trafficLight);
+
 //
 //		CarAgent car1 = new CarAgentExtended("car-1", env, r, 0, 0.1, 0.3, 6);
 //		this.addAgent(car1);
