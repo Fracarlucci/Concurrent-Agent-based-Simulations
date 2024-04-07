@@ -33,6 +33,7 @@ public class ThreadManager {
         this.actBarrier = new BarrierImpl(nThreadsPerCars);
         this.sim = sim;
         this.agentsThreads = new LinkedList<>();
+        this.trafficLightsThreads = new LinkedList<>();
         this.env = env;
     }
 
@@ -62,7 +63,7 @@ public class ThreadManager {
         final int trafficLightsPerThread = trafficLights.size() / this.nThreadsPerTrafficLights;
         int remainingTrafficLights = trafficLights.size() % this.nThreadsPerTrafficLights;
 
-        for (int i = 0; i < nThreadsPerCars; i++) {
+        for (int i = 0; i < nThreadsPerTrafficLights; i++) {
 
             TrafficLightsThread tlt = new TrafficLightsThread(actBarrier, stepBarrier, sim, dt);
             this.trafficLightsThreads.add(tlt);

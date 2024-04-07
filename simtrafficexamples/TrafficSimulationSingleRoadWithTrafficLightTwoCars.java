@@ -2,7 +2,7 @@ package pcd.ass01.simtrafficexamples;
 
 import pcd.ass01.simengineseq.AbstractSimulation;
 import pcd.ass01.simtrafficbase.*;
-//import pcd.ass01.simtrafficbase.CarAgentExtended;
+import pcd.ass01.simtrafficbase.CarAgentExtended;
 import pcd.ass01.simtrafficbase.TrafficLight.TrafficLightState;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class TrafficSimulationSingleRoadWithTrafficLightTwoCars extends Abstract
 	public TrafficSimulationSingleRoadWithTrafficLightTwoCars(int nThreads) {
 		super();
         this.env = new RoadsEnv();
-        this.threadManager = new ThreadManager(nThreads, 0, this, env);
+        this.threadManager = new ThreadManager(nThreads, 1, this, env);
 	}
 
 	public void setup() {
@@ -38,8 +38,7 @@ public class TrafficSimulationSingleRoadWithTrafficLightTwoCars extends Abstract
 		TrafficLight tl = env.createTrafficLight(new P2d(740,300), TrafficLight.TrafficLightState.GREEN, 75, 25, 100);
 		r.addTrafficLight(tl, 740);
 
-
-		threadManager.generateTrafficLight(trafficLight);
+		threadManager.generateTrafficLight(List.of(tl), 1);
 
 
 		CarAgent car1 = new CarAgentExtended("car-1", env, r, 0, 0.1, 0.3, 6);
