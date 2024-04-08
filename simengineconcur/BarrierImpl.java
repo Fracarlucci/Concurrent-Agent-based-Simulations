@@ -21,6 +21,10 @@ public class BarrierImpl implements Barrier {
     this.cond = mutex.newCondition();
   }
 
+  /**
+   * Wait until all threads are ready for the next phase
+   * @param sim
+   */
   @Override
   public void waitBefore(AbstractSimulation sim) {
     try {
