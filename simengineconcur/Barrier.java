@@ -4,7 +4,7 @@ import pcd.ass01.simengineseq.AbstractSimulation;
 
 /**
  * Interface for a barrier to synchronize threads
- 
+ *
  */
 public interface Barrier {
   
