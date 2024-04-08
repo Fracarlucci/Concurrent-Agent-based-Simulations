@@ -62,4 +62,8 @@ public class TrafficSimulationWithCrossRoads extends AbstractSimulation {
 		this.threadManager.setSteps(nSteps);
 		this.threadManager.startThreads(1);
 	}
+
+	public ThreadManager getThreadManager() {
+		return this.threadManager;
+	}
 }
