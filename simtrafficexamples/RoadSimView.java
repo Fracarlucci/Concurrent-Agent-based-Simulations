@@ -25,7 +25,8 @@ public class RoadSimView extends JFrame implements SimulationListener {
 
 	final private RoadSimViewPanel panel;
 	private static final int CAR_DRAW_SIZE = 10;
-	
+	boolean newRun = true;
+
 	public RoadSimView(AbstractSimulation sim) {
 		super("RoadSim View");
 		setSize(1500,600);
@@ -51,7 +52,10 @@ public class RoadSimView extends JFrame implements SimulationListener {
 				try {
 					int nSteps = Integer.parseInt(nStepsField.getText());
 
-					sim.run(nSteps);
+					if(newRun) {
+						sim.run(nSteps);
+						newRun = false;
+					}
 
 					start.setEnabled(false);
 					stop.setEnabled(true);
