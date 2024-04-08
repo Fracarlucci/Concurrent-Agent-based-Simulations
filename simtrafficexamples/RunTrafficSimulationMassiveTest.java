@@ -9,8 +9,8 @@ public class RunTrafficSimulationMassiveTest {
 		int nSteps = 100;
 		int nThreads = Runtime.getRuntime().availableProcessors();
 
-		// Per avviare il Massive test, settare nel codice la variabile
-		// 'stop' all'interno di AbstractSimulation a true
+		// For Massive test, set the var
+		// 'stop' inside AbstractSimulation to true
 		var simulation = new TrafficSimulationSingleRoadMassiveNumberOfCars(numCars, nThreads);
 		simulation.setup();
 
