@@ -35,8 +35,6 @@ public class TrafficLightsThread extends Thread {
     public void run() {
         while(true) {
             stepBarrier.waitBefore(sim);
-//            if(sim.isStopped())
-//                break;
             this.step();
         }
     }

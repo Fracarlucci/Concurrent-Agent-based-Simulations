@@ -31,10 +31,6 @@ public abstract class AbstractAgent {
 	 public void init(AbstractEnvironment env) {
 		this.env = env;
 	}
-	
-
-//	abstract public void step(int dt);
-	
 
 	public  String getAgentId() {
 		return myId;

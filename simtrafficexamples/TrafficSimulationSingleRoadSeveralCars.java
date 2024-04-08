@@ -33,7 +33,6 @@ public class TrafficSimulationSingleRoadSeveralCars extends AbstractSimulation {
 		final int nCyclesPerSec = 25;
 
 		this.setupTimings(0, 1);
-		threadManager.setupStartTiming(t0);
 
 		this.setupEnvironment(env);
 
@@ -44,7 +43,6 @@ public class TrafficSimulationSingleRoadSeveralCars extends AbstractSimulation {
 		for (int i = 0; i < nCars; i++) {
 
 			String carId = "car-" + i;
-			// double initialPos = i*30;
 			double initialPos = i*10;
 
 			double carAcceleration = 1; //  + gen.nextDouble()/2;

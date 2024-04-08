@@ -28,7 +28,6 @@ public class TrafficSimulationSingleRoadMassiveNumberOfCars extends AbstractSimu
         int dt = 1;
 
 		this.setupTimings(0, 1);
-        threadManager.setupStartTiming(t0);
 
 		this.setupEnvironment(env);
 
@@ -59,7 +58,7 @@ public class TrafficSimulationSingleRoadMassiveNumberOfCars extends AbstractSimu
     }
 
     @Override
-    public void run(int nSteps) { //TODO rm par
+    public void run(int nSteps) { 
         this.threadManager.setSteps(nSteps);
         this.threadManager.startThreads(1);
     }

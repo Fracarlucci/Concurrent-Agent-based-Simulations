@@ -28,7 +28,6 @@ public class TrafficSimulationSingleRoadWithTrafficLightTwoCars extends Abstract
 		final int nCyclesPerSec = 25;
 
 		this.setupTimings(0, 1);
-		threadManager.setupStartTiming(0);
 
 		this.setupEnvironment(env);
 

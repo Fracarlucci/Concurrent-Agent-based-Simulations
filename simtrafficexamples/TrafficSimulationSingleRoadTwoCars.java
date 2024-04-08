@@ -29,7 +29,6 @@ public class TrafficSimulationSingleRoadTwoCars extends AbstractSimulation {
 		int nCyclesPerSec = 25;
 
 		this.setupTimings(t0, dt);
-		threadManager.setupStartTiming(t0);
 
 		this.setupEnvironment(env);
 		Road r = env.createRoad(new P2d(0,300), new P2d(1500,300));
