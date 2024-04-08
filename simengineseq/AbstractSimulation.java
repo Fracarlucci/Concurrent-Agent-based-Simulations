@@ -146,4 +146,10 @@ public abstract class AbstractSimulation {
     this.stop = true;
     this.monitor.releaseWrite();
   }
+
+  public void start(){
+    this.monitor.requestWrite();
+    this.stop = false;
+    this.monitor.releaseWrite();
+  }
 }

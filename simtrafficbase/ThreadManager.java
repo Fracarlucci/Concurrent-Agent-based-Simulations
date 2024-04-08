@@ -101,8 +101,8 @@ public class ThreadManager {
             long startStepTime = 0;
 
             System.out.println(nSteps);
-            while (actualSteps < this.nSteps && !sim.isStopped()) {
-                this.stepBarrier.waitBefore(sim.isStopped());
+            while (actualSteps < this.nSteps) {
+                this.stepBarrier.waitBefore(sim);
 
                 if(startStepTime!=0){
                     timePerStep += System.currentTimeMillis() - startStepTime;
@@ -118,7 +118,7 @@ public class ThreadManager {
                 startStepTime = System.currentTimeMillis();
                 System.out.println("Steps: " + actualSteps);
             }
-            this.stepBarrier.waitBefore(sim.isStopped());
+            this.stepBarrier.waitBefore(sim);
             timePerStep += System.currentTimeMillis() - startStepTime;
             totalTime = System.currentTimeMillis() - startWallTime;
             System.out.println("Finish: " + actualSteps);

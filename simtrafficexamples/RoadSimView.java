@@ -12,11 +12,7 @@ import pcd.ass01.simengineseq.AbstractAgent;
 import pcd.ass01.simengineseq.AbstractEnvironment;
 import pcd.ass01.simengineseq.AbstractSimulation;
 import pcd.ass01.simengineseq.SimulationListener;
-import pcd.ass01.simtrafficbase.CarAgentInfo;
-import pcd.ass01.simtrafficbase.Road;
-import pcd.ass01.simtrafficbase.RoadsEnv;
-import pcd.ass01.simtrafficbase.TrafficLight;
-import pcd.ass01.simtrafficbase.V2d;
+import pcd.ass01.simtrafficbase.*;
 
 import java.awt.*;
 import javax.swing.*;
@@ -26,7 +22,7 @@ public class RoadSimView extends JFrame implements SimulationListener {
 	final private RoadSimViewPanel panel;
 	private static final int CAR_DRAW_SIZE = 10;
 	
-	public RoadSimView(AbstractSimulation sim) {
+	public RoadSimView(AbstractSimulation sim, ThreadManager threadManager) {
 		super("RoadSim View");
 		setSize(1500,600);
 
@@ -50,8 +46,13 @@ public class RoadSimView extends JFrame implements SimulationListener {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int nSteps = Integer.parseInt(nStepsField.getText());
+					sim.start();
 
-					sim.run(nSteps);
+
+//					threadManager.getActBarrier().signalAll();
+//					threadManager.getStepBarrier().signalAll();
+
+//					sim.run(nSteps);
 
 					start.setEnabled(false);
 					stop.setEnabled(true);
