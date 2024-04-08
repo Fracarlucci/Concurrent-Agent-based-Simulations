@@ -5,7 +5,6 @@ import java.util.Random;
 
 import pcd.ass01.simengineseq.AbstractSimulation;
 import pcd.ass01.simtrafficbase.*;
-//import pcd.ass01.simtrafficbase.CarAgentExtended;
 import pcd.ass01.simtrafficbase.TrafficLight.TrafficLightState;
 
 public class TrafficSimulationWithCrossRoads extends AbstractSimulation {

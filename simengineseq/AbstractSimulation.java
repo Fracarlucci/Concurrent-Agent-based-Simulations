@@ -34,7 +34,7 @@ public abstract class AbstractSimulation {
   private long startWallTime;
   private long endWallTime;
   private long averageTimePerStep;
-  private volatile Boolean stop = true;
+  private volatile Boolean stop = false;
   private GUIMonitor monitor = new GUIMonitor();
 
   protected AbstractSimulation() {
@@ -55,7 +55,6 @@ public abstract class AbstractSimulation {
    * @param numSteps
    */
   public void run(int numSteps) {
-//    this.stopRequested = false;	// Shared variable.
 
     startWallTime = System.currentTimeMillis();
 

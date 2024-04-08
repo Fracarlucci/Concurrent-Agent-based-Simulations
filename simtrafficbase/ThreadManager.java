@@ -76,8 +76,6 @@ public class ThreadManager {
             }
         }
     }
-    public void setupStartTiming(final int t) {
-    }//TODO ???
 
     public void startThreads(int dt) {
         agentsThreads.forEach(ca -> {
@@ -100,7 +98,6 @@ public class ThreadManager {
             long timePerStep = 0;
             long startStepTime = 0;
 
-            System.out.println(nSteps);
             while (actualSteps < this.nSteps) {
                 this.stepBarrier.waitBefore(sim);
 
@@ -116,7 +113,6 @@ public class ThreadManager {
                 }
                 actualSteps++;
                 startStepTime = System.currentTimeMillis();
-                System.out.println("Steps: " + actualSteps);
             }
             this.stepBarrier.waitBefore(sim);
             timePerStep += System.currentTimeMillis() - startStepTime;
