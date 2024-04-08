@@ -27,7 +27,7 @@ public class BarrierImpl implements Barrier {
       mutex.lock();
       nWait++;
       while(sim.isStopped()) {
-        System.out.println(sim.isStopped());
+        System.out.println("[SIMULATION]: Stopped");
       }
       if (nWait < nThreads) {
         do {
