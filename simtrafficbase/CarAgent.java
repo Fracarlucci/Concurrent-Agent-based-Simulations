@@ -32,6 +32,10 @@ public abstract class CarAgent extends AbstractAgent {
     env.registerNewCar(this, road, initialPos);
   }
 
+  /**
+   * Sense and decide the action to be taken
+   * @param dt
+   */
   public void senseAndDecide(int dt) {
     AbstractEnvironment env = this.getEnv();
     currentPercept = (CarPercept) env.getCurrentPercepts(getAgentId());
@@ -41,6 +45,9 @@ public abstract class CarAgent extends AbstractAgent {
     decide(dt);
   }
 
+  /**
+   * Perform the selected action
+   */
   public void act() {
       selectedAction.ifPresent(action -> this.getEnv().doAction(super.getAgentId(), action));
   }

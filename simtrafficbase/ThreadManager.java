@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+/**
+ * Thread that manages all the threads of the simulation
+ */
 public class ThreadManager {
 
     private final int nThreadsPerCars;
@@ -37,6 +40,11 @@ public class ThreadManager {
         this.env = env;
     }
 
+    /**
+     * Generate the threads for the cars
+     * @param carAgents
+     * @param dt
+     */
     public void generateCars(List<CarAgent> carAgents, int dt) {
         this.agentsThreads.clear();
         var iter = carAgents.iterator(); // Iterator of cars.
@@ -57,6 +65,11 @@ public class ThreadManager {
         }
     }
 
+    /**
+     * Generate the threads for the traffic lights
+     * @param trafficLights
+     * @param dt
+     */
     public void generateTrafficLight(List<TrafficLight> trafficLights, int dt) {
         this.trafficLightsThreads.clear();
         final var iter = trafficLights.iterator();
@@ -77,6 +90,10 @@ public class ThreadManager {
         }
     }
 
+    /**
+     * Start the agents' threads
+     * @param dt
+     */
     public void startThreads(int dt) {
         agentsThreads.forEach(ca -> {
             ca.initCars(env);
@@ -90,7 +107,7 @@ public class ThreadManager {
             });
         }
 
-
+        // Create the thread that will manage the simulation
         new Thread(() -> {
             int actualSteps = 0;
             long startWallTime = System.currentTimeMillis();

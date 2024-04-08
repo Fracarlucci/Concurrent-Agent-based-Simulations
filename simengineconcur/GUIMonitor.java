@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * readers/writers Monitor (Threads/GUI)
  *
-  */
+*/
 public class GUIMonitor {
     private int nReaders;
     private int nWriters;

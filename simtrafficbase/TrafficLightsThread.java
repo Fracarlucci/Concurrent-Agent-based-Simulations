@@ -7,6 +7,9 @@ import pcd.ass01.simengineseq.AbstractSimulation;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Thread managing the traffic lights
+ */
 public class TrafficLightsThread extends Thread {
 
     private final Barrier actBarrier;

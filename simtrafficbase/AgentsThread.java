@@ -7,6 +7,11 @@ import pcd.ass01.simengineconcur.Barrier;
 import pcd.ass01.simengineseq.AbstractEnvironment;
 import pcd.ass01.simengineseq.AbstractSimulation;
 
+/**
+ * 
+ * Thread managing the agents assigned to it
+ * 
+ */
 public class AgentsThread extends Thread {
 
   private final Barrier actBarrier;   // Barrier before doing an action.
@@ -34,6 +39,9 @@ public class AgentsThread extends Thread {
     }
   }
 
+  /**
+   * Perform a step of the simulation using barriers to synchronize the agents
+   */
   public void step() {
     actBarrier.waitBefore(simulation);
     this.carAgents.forEach(car -> car.senseAndDecide(this.dt));
@@ -41,6 +49,9 @@ public class AgentsThread extends Thread {
     this.carAgents.forEach(car -> car.act());
   }
 
+  /**
+   * Main loop of the thread
+   */
   public void run() {
     while(true) {
       stepBarrier.waitBefore(simulation);
