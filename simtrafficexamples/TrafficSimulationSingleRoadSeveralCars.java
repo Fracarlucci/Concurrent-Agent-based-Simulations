@@ -30,7 +30,7 @@ public class TrafficSimulationSingleRoadSeveralCars extends AbstractSimulation {
 		List<CarAgent> cars = new LinkedList<>();
 		int t0 = 0;
 		int dt = 1;
-		final int nCyclesPerSec = 1000;
+		final int nCyclesPerSec = 25;
 
 		this.setupTimings(0, 1);
 		threadManager.setupStartTiming(t0);

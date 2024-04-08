@@ -1,7 +1,6 @@
 package pcd.ass01.simengineseq;
 
-import pcd.ass01.simtrafficbase.GUIMonitor;
-import pcd.ass01.simtrafficbase.ThreadManager;
+import pcd.ass01.simengineconcur.GUIMonitor;
 
 import java.util.ArrayList;
 import java.util.List;
